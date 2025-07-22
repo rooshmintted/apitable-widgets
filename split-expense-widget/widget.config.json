@@ -1,10 +1,10 @@
 {
-  "packageId": "wpk789456B12G",
+  "packageId": "wpk189456B13F",
   "spaceId": "spcQfv6MtoUp0",
   "entry": "./src/index.tsx",
   "name": {
     "zh-CN": "费用分割器",
-    "en-US": "s Exp Widget"
+    "en-US": "Expense"
   },
   "icon": "./package_icon.png",
   "cover": "./cover.png",

@@ -1,0 +1,96 @@
+---
+alwaysApply: true
+---
+State Management in APITable Widgets
+In your widget, you'll manage two primary types of state:
+
+Datasheet State: This is the data stored directly in your APITable datasheet (records, fields, etc.). You should always access and manipulate this data using the reactive hooks from the @apitable/widget-sdk, like useRecords, useDatasheet, and useFields. These hooks ensure your widget automatically re-renders when the underlying data changes.
+
+Local UI State: This is temporary state that exists only within your widget's UI, such as loading indicators, input values, or whether a modal is open. For this, you should use React's built-in useState hook.
+
+The Problem: Multiple Executions on Button Press
+The most common reason an action executes multiple times from a single click is due to unstable function references.
+
+Every time your component re-renders (because state or props change), any function defined inside the component body is recreated from scratch. If this new function is passed to an event handler like onClick, it can sometimes trigger unintended side effects, especially in complex components or if it's a dependency of a useEffect hook.
+
+The solution is to wrap your event-handling functions in React's useCallback hook. This memoizes the function, ensuring it is not recreated on every render unless its specific dependencies change.
+
+Example: Fixing an Unstable Button Handler
+Let's look at a simple widget that adds a new record.
+
+Problematic Code (Before)
+Without useCallback, the handleButtonClick function is a completely new function every time the MyWidget component re-renders. This can lead to unexpected behavior.
+
+TypeScript
+
+import React, { useState } from 'react';
+import { useDatasheet } from '@apitable/widget-sdk';
+
+const MyWidget = () => {
+  const datasheet = useDatasheet();
+  const [status, setStatus] = useState('idle');
+
+  // ⚠️ This function is recreated on every single render.
+  const handleButtonClick = async () => {
+    if (!datasheet) return;
+    setStatus('loading');
+    console.log('This might run more than you expect!');
+    // In a complex app, this could cause issues.
+    await datasheet.addRecord({ valuesMap: { 'fldYourField': 'New Value' } });
+    setStatus('success');
+  };
+
+  return (
+    <div>
+      <button onClick={handleButtonClick} disabled={status === 'loading'}>
+        {status === 'loading' ? 'Adding...' : 'Add Record'}
+      </button>
+      {status === 'success' && <p>Record added!</p>}
+    </div>
+  );
+};
+Corrected Code (After)
+By wrapping the handler in useCallback, you guarantee the function reference is stable across re-renders. Your code already does this correctly in handleReconcile and other handlers.
+
+TypeScript
+
+import React, { useState, useCallback } from 'react';
+import { useDatasheet } from '@apitable/widget-sdk';
+
+const MyWidget = () => {
+  const datasheet = useDatasheet();
+  const [status, setStatus] = useState('idle');
+
+  // ✅ The function is now memoized and stable across re-renders.
+  const handleButtonClick = useCallback(async () => {
+    if (!datasheet) return;
+    setStatus('loading');
+    console.log('This will now run exactly once per click.');
+    await datasheet.addRecord({ valuesMap: { 'fldYourField': 'New Value' } });
+    setStatus('success');
+  }, [datasheet]); // Only recreate if the datasheet instance changes.
+
+  return (
+    <div>
+      <button onClick={handleButtonClick} disabled={status === 'loading'}>
+        {status === 'loading' ? 'Adding...' : 'Add Record'}
+      </button>
+      {status === 'success' && <p>Record added!</p>}
+    </div>
+  );
+};
+Key Takeaways
+Use useState for simple, local UI state (like isProcessing or selectedTransaction).
+
+Use the SDK hooks (useRecords, useDatasheet) for reactive datasheet state.
+
+Wrap all event handlers (functions passed to onClick, onChange, etc.) in useCallback. This gives them a stable identity and prevents them from causing unnecessary re-renders or multiple executions.
+
+Manage Loading/Processing State. Your use of an isProcessing flag is a crucial pattern. It provides a rock-solid way to disable buttons and prevent the user from firing the same async action multiple times before the first one has completed.
+
+
+
+
+
+
+

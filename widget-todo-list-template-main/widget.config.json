@@ -1,0 +1,19 @@
+{
+  "packageId": "wpkP54M0LMh9A",
+  "spaceId": "spcQfv6MtoUp0",
+  "entry": "./src/index.ts",
+  "name": {
+    "zh-CN": "Todo MVC",
+    "en-US": "asdsd"
+  },
+  "icon": "./package_icon.png",
+  "cover": "./cover.png",
+  "authorName": "APITable",
+  "authorIcon": "./author_icon.png",
+  "authorLink": "https://apitable.com",
+  "authorEmail": "dev@apitable.com",
+  "description": {
+    "zh-CN": "将表格中的任务变成待办事项列表，支持快速勾选和插入记录",
+    "en-US": "Convert tasks from the datasheet into a to-do list that allows you to check and insert records quickly"
+  }
+}
