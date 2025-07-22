@@ -1,0 +1,19 @@
+{
+  "packageId": "wpk123456A89B",
+  "spaceId": "spcQfv6MtoUp0",
+  "entry": "./src/index.tsx",
+  "name": {
+    "zh-CN": "财务仪表板",
+    "en-US": "Financial Dashboard"
+  },
+  "icon": "./package_icon.png",
+  "cover": "./cover.png",
+  "authorName": "APITable",
+  "authorIcon": "./author_icon.png",
+  "authorLink": "https://apitable.com",
+  "authorEmail": "dev@apitable.com",
+  "description": {
+    "zh-CN": "全面的财务仪表板，计算损益并显示财务数据",
+    "en-US": "A comprehensive financial dashboard that calculates profit and loss from financial data"
+  }
+}

@@ -1,0 +1,90 @@
+---
+alwaysApply: true
+---
+APITable widgets are custom applications that can access and manipulate datasheet data through a structured API. strings.en-US.json:123-125
+
+Core Data Access Methods
+1. View-Based Data Access
+The primary way to access data in widgets is through View objects, which provide methods for retrieving and manipulating records and fields:
+
+getFields() - Retrieve field definitions from a view
+
+By default excludes hidden fields
+Use includeHidden: true option to include all fields view.test.ts:64-90
+getRecords() - Retrieve records in view order
+
+Returns records sorted according to the view's row configuration view.test.ts:104-109
+addRecords() - Create new records
+
+Supports adding by count or with specific record values
+Can specify insertion index and field values view.test.ts:125-131
+2. API-Based Data Operations
+Widgets can perform CRUD operations through the API system:
+
+Get Records - Retrieve datasheet records with filtering and sorting strings.en-US.json:198
+
+Add Records - Create new records with field validation strings.en-US.json:173
+
+Update Records - Modify existing record data strings.en-US.json:569
+
+Delete Records - Remove records from datasheets strings.en-US.json:180
+
+Field Type Handling
+Widgets must handle various field types with specific validation rules:
+
+Supported Field Types
+Text Fields: Single line and multi-line text with formatting strings.en-US.json:430-432
+
+Checkbox Fields: Boolean values only strings.en-US.json:442
+
+DateTime Fields: UTC timestamps or formatted dates strings.en-US.json:446
+
+Currency Fields: Numeric values for financial data strings.en-US.json:445
+
+Email Fields: String values with email validation strings.en-US.json:448
+
+Attachment Fields: File objects with token and name properties strings.en-US.json:437-441
+
+Read-Only Field Types
+Certain fields cannot be modified through the API:
+
+Auto Number Fields: System-generated sequential numbers strings.en-US.json:502
+
+Formula Fields: Computed values based on other fields strings.en-US.json:508
+
+Created Time/By Fields: System-maintained audit fields strings.en-US.json:505-506
+
+Updated Time/By Fields: System-maintained modification tracking strings.en-US.json:554-555
+
+Error Handling and Validation
+API Limitations and Constraints
+Maximum records per request: Limited batch operations strings.en-US.json:551
+
+Field validation: Each field type has specific format requirements strings.en-US.json:447
+
+Record limits: Datasheets have maximum record capacity strings.en-US.json:95-96
+
+Widget-Specific Constraints
+Widget creation limits apply per space strings.en-US.json:588
+
+Widget package ID validation required strings.en-US.json:557
+
+Best Practices for Widget Development
+1. Data Access Patterns
+Use view-based access for consistent data ordering and filtering
+Implement proper error handling for API rate limits and capacity constraints
+Validate field types before attempting updates
+2. Performance Considerations
+Batch operations when possible within API limits
+Cache frequently accessed field and view metadata
+Handle asynchronous operations properly
+3. User Experience
+Provide feedback for long-running operations
+Handle offline states gracefully
+Implement proper loading states during data operations
+Notes
+The APITable widget system provides a comprehensive API for data manipulation with strong typing and validation. The core architecture uses view-based data access patterns with support for various field types and CRUD operations. Widget developers should focus on proper error handling, field type validation, and respecting API constraints to build robust applications.
+
+The system includes extensive internationalization support and detailed error messaging to help developers debug issues during widget development. Rate limiting and capacity management are built into the API to ensure system stability.
+
+

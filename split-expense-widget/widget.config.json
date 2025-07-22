@@ -1,0 +1,19 @@
+{
+  "packageId": "wpk789456B12G",
+  "spaceId": "spcQfv6MtoUp0",
+  "entry": "./src/index.tsx",
+  "name": {
+    "zh-CN": "费用分割器",
+    "en-US": "s Exp Widget"
+  },
+  "icon": "./package_icon.png",
+  "cover": "./cover.png",
+  "authorName": "APITable",
+  "authorIcon": "./author_icon.png",
+  "authorLink": "https://apitable.com",
+  "authorEmail": "dev@apitable.com",
+  "description": {
+    "zh-CN": "将包含多个产品的交易分割为单独的产品交易",
+    "en-US": "Split transactions with multiple products into individual product transactions"
+  }
+}
